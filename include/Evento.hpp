@@ -1,24 +1,42 @@
 #ifndef EVENTO_HPP
 #define EVENTO_HPP
-
+#include <string>
+using namespace std;
 class Evento
 {
 private:
     int filaId;
-    int tempo;
-    int duracao;
+    string pacienteId;
+    int year;
+    int month;
+    int day;
+    double hour;
+    double duracao;
 
 public:
     Evento();
-    Evento(int filaId, int tempo, int duracao);
+    Evento(int filaId, string pacienteId, int year, int month, int day, double hour, double duracao);
     ~Evento();
 
     int getFilaId();
-    int getTempo();
-    int getDuracao();
     void setFilaId(int filaId);
-    void setTempo(int tempo);
-    void setDuracao(int duracao);
+
+    int getYear();
+    void setYear(int year);
+
+    int getMonth();
+    void setMonth(int month);
+
+    int getDay();
+    void setDay(int day);
+
+    double getHour();
+    void setHour(double hour);
+
+    double getDuracao();
+    void setDuracao(double duracao);
+
+    bool compareTime(Evento evento);
 };
 ;
 

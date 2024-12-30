@@ -8,6 +8,9 @@ private:
     int maxsize;
     Evento *data;
 
+public:
+    Escalonador(int maxsize);
+    ~Escalonador();
     void Insert(Evento event);
     Evento Remove();
     bool IsEmpty();
@@ -16,10 +19,6 @@ private:
     int GetSucessorDir(int posicao);
     void HeapifyPorBaixo(int posicao);
     void HeapifyPorCima(int posicao);
-
-public:
-    Escalonador(int maxsize);
-    ~Escalonador();
 };
 
 #endif

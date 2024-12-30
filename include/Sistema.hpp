@@ -1,6 +1,8 @@
 #ifndef SISTEMA_HPP
 #define SISTEMA_HPP
 #include "Fila.hpp"
+#include "Escalonador.hpp"
+#include "Evento.hpp"
 
 class Sistema
 {
@@ -27,6 +29,7 @@ public:
     int imagingTestCapacity;
     int medicineCapacity;
     int numPatients;
+    Escalonador escalonador;
     Sistema();
     ~Sistema();
 };

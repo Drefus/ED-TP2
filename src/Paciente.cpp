@@ -1,7 +1,7 @@
 #include "Paciente.hpp"
 #include <sstream>
 
-Paciente::Paciente() : id(""), isHospitalDischarged(false), yearOfService(0), monthOfService(0), dayOfService(0), hourOfService(0), priority(Priority::LOW), numOfMedicalTreatment(0), numOfTests(0), numOfImagingTests(0), numOfMedicines(0), timeOfService(0), timeOfWaiting(0), timeTotal(0) {}
+Paciente::Paciente() : id(""), isHospitalDischarged(false), yearOfService(0), monthOfService(0), dayOfService(0), hourOfService(0), priority(Priority::GREEN), numOfMedicalTreatment(0), numOfTests(0), numOfImagingTests(0), numOfMedicines(0), timeOfService(0), timeOfWaiting(0), timeTotal(0) {}
 
 Paciente::Paciente(string id, bool isHospitalDischarged, int yearOfService, int monthOfService, int dayOfService, int hourOfService, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, int timeOfService, int timeOfWaiting)
     : id(id), isHospitalDischarged(isHospitalDischarged), yearOfService(yearOfService), monthOfService(monthOfService), dayOfService(dayOfService), hourOfService(hourOfService), priority(priority), numOfMedicalTreatment(numOfMedicalTreatment), numOfTests(numOfTests), numOfImagingTests(numOfImagingTests), numOfMedicines(numOfMedicines), timeOfService(timeOfService), timeOfWaiting(timeOfWaiting), timeTotal(0) {}
@@ -154,12 +154,12 @@ Paciente Paciente::LineToPaciente(string line)
     int monthOfService;
     int dayOfService;
     int hourOfService;
-    Priority priority;
+    int priority;
     int numOfMedicalTreatment;
     int numOfTests;
     int numOfImagingTests;
     int numOfMedicines;
     std::istringstream iss(line);
     iss >> id >> isHospitalDischarged >> yearOfService >> monthOfService >> dayOfService >> hourOfService >> priority >> numOfMedicalTreatment >> numOfTests >> numOfImagingTests >> numOfMedicines;
-    return Paciente(id, isHospitalDischarged, yearOfService, monthOfService, dayOfService, hourOfService, priority, numOfMedicalTreatment, numOfTests, numOfImagingTests, numOfMedicines, 0, 0);
+    return Paciente(id, isHospitalDischarged, yearOfService, monthOfService, dayOfService, hourOfService, Priority(priority), numOfMedicalTreatment, numOfTests, numOfImagingTests, numOfMedicines, 0, 0);
 }
