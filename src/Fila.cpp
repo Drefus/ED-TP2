@@ -79,6 +79,10 @@ bool Fila::IsEmpty()
 // O paciente com o horário de chegada mais cedo ou maior prioridade vem primeiro.
 void Fila::OrderByTime()
 {
+    if (IsEmpty())
+    {
+        return;
+    }
     head = MergeSort(head);
     Node *current = head;
     while (current->next != nullptr)
@@ -139,8 +143,8 @@ Node *Fila::SortedMerge(Node *left, Node *right)
     }
 
     Node *result = nullptr;
-    if (left->data.getCurrentTime().compareTime(right->data.getCurrentTime()) ||
-        (left->data.getCurrentTime().isEqual(right->data.getCurrentTime()) && left->data.getPriority() >= right->data.getPriority()))
+    if (left->data.getCurrentTime().compareTime(right->data.getCurrentTime()) == true ||
+        (left->data.getCurrentTime().isEqual(right->data.getCurrentTime()) == true && left->data.getPriority() >= right->data.getPriority()))
     {
         result = left;
         result->next = SortedMerge(left->next, right);

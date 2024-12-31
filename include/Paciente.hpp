@@ -52,34 +52,34 @@ public:
     Paciente();
     Paciente(string id, bool isHospitalDischarged, Time initialTime, Time currentTime, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, double timeOfService, double timeOfWaiting);
 
-    string getId() const;
-    void setId(const string &id);
-    bool getIsHospitalDischarged() const;
+    string getId();
+    void setId(string &id);
+    bool getIsHospitalDischarged();
     void setIsHospitalDischarged(bool isHospitalDischarged);
-    Time getInitialTime() const;
-    void setInitialTime(const Time &initialTime);
-    Time getCurrentTime() const;
-    void setCurrentTime(const Time &currentTime);
-    Priority getPriority() const;
+    Time getInitialTime();
+    void setInitialTime(Time initialTime);
+    Time getCurrentTime();
+    void setCurrentTime(Time currentTime);
+    Priority getPriority();
     void setPriority(Priority priority);
-    int getNumOfMedicalTreatment() const;
+    int getNumOfMedicalTreatment();
     void setNumOfMedicalTreatment(int numOfMedicalTreatment);
-    int getNumOfTests() const;
+    int getNumOfTests();
     void setNumOfTests(int numOfTests);
-    int getNumOfImagingTests() const;
+    int getNumOfImagingTests();
     void setNumOfImagingTests(int numOfImagingTests);
-    int getNumOfMedicines() const;
+    int getNumOfMedicines();
     void setNumOfMedicines(int numOfMedicines);
-    double getTimeOfService() const;
+    double getTimeOfService();
     void setTimeOfService(double timeOfService);
-    double getTimeOfWaiting() const;
+    double getTimeOfWaiting();
     void setTimeOfWaiting(double timeOfWaiting);
-    double getTimeTotal() const;
+    double getTimeTotal();
     void setTimeTotal(double timeTotal);
-    State getState() const;
+    State getState();
     void setState(State state);
 
-    Paciente LineToPaciente(string line);
+    Paciente ReadLineToPaciente();
 };
 
 #endif

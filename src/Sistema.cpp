@@ -2,6 +2,7 @@
 #include "Fila.hpp"
 #include "Paciente.hpp"
 #include <iostream>
+using namespace std;
 Sistema::Sistema()
 {
     InicializeProcess();
@@ -11,12 +12,11 @@ Sistema::Sistema()
     escalonador = Escalonador(numPatients);
     preScreening = Fila(0);
     pacientes = new Paciente[numPatients];
-    for (int i = 0; i > numPatients; i++)
+    for (int i = 0; i < numPatients; i++)
     {
         Paciente paciente;
         string line;
-        getline(cin, line);
-        paciente = paciente.LineToPaciente(line);
+        paciente = paciente.ReadLineToPaciente();
         pacientes[i] = paciente;
         Evento evento;
         evento = Evento(0, paciente.getId(), paciente.getCurrentTime(), screeningProcedimento.getDuration());
@@ -228,6 +228,7 @@ Sistema::Sistema()
             };
         }
     }
+    PrintPacientes();
 }
 
 Sistema::~Sistema()
@@ -477,5 +478,17 @@ State Sistema::GetNewState(int newFilaId, bool isDone)
         return State::MEDICINE_QUEUE;
     default:
         return State::HOSPITAL_DISCHARGED;
+    }
+}
+
+void Sistema::PrintPacientes()
+{
+    for (int i = 0; i < numPatients; i++)
+    {
+        cout << pacientes[i].getId() << " ";
+        pacientes[i].getInitialTime().printTime();
+        cout << " ";
+        pacientes[i].getCurrentTime().printTime();
+        cout << " " << (pacientes[i].getCurrentTime().getTotalHours() - pacientes[i].getInitialTime().getTotalHours()) << " " << pacientes[i].getTimeOfService() << pacientes[i].getTimeOfWaiting() << endl;
     }
 }

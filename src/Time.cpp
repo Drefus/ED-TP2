@@ -1,4 +1,5 @@
 #include "Time.hpp"
+#include <iostream>
 
 Time::Time(int y, int m, int d, double h) : year(y), month(m), day(d), hour(h) {}
 
@@ -112,4 +113,9 @@ void Time::addTime(double h)
 double Time::getTotalHours()
 {
     return year * 8760 + month * 720 + day * 24 + hour;
+}
+
+void Time::printTime()
+{
+    std::cout << year << " " << month << " " << day << " " << hour << std::endl;
 }

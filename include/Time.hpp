@@ -24,5 +24,6 @@ public:
     bool isEqual(Time time);
     void addTime(double h);
     double getTotalHours();
+    void printTime();
 };
 #endif

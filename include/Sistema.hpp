@@ -37,6 +37,7 @@ public:
     int isEmpityProcess(int filaId);
     void AddServiceToProcedimento(int filaId, Time initialTime, double duracao, int numUnit);
     State GetNewState(int newFilaId, bool isDone);
+    void PrintPacientes();
 };
 
 #endif
