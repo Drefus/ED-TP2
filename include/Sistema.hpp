@@ -14,8 +14,8 @@ public:
     Fila test;
     Fila imagingTest;
     Fila medicine;
-    double initialTime;
-    double currentTime;
+    Time initialTime;
+    Time currentTime;
     double screeningDutation;
     double medicalConsultationDuration;
     double medicalTreatmentDuration;
@@ -32,6 +32,9 @@ public:
     Escalonador escalonador;
     Sistema();
     ~Sistema();
+    int FindTheNextFila(int filaId, Paciente paciente);
+    void InstertInFila(Paciente paciente, int filaId);
+    Paciente RemoveInFila(int filaId);
 };
 
 #endif

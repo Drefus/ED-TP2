@@ -1,10 +1,10 @@
 #include "Paciente.hpp"
 #include <sstream>
 
-Paciente::Paciente() : id(""), isHospitalDischarged(false), yearOfService(0), monthOfService(0), dayOfService(0), hourOfService(0), priority(Priority::GREEN), numOfMedicalTreatment(0), numOfTests(0), numOfImagingTests(0), numOfMedicines(0), timeOfService(0), timeOfWaiting(0), timeTotal(0) {}
+Paciente::Paciente() : id(""), isHospitalDischarged(false), time(Time(0, 0, 0, 0)), priority(Priority::GREEN), numOfMedicalTreatment(0), numOfTests(0), numOfImagingTests(0), numOfMedicines(0), timeOfService(0), timeOfWaiting(0), timeTotal(0) {}
 
-Paciente::Paciente(string id, bool isHospitalDischarged, int yearOfService, int monthOfService, int dayOfService, int hourOfService, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, int timeOfService, int timeOfWaiting)
-    : id(id), isHospitalDischarged(isHospitalDischarged), yearOfService(yearOfService), monthOfService(monthOfService), dayOfService(dayOfService), hourOfService(hourOfService), priority(priority), numOfMedicalTreatment(numOfMedicalTreatment), numOfTests(numOfTests), numOfImagingTests(numOfImagingTests), numOfMedicines(numOfMedicines), timeOfService(timeOfService), timeOfWaiting(timeOfWaiting), timeTotal(0) {}
+Paciente::Paciente(string id, bool isHospitalDischarged, Time time, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, int timeOfService, int timeOfWaiting)
+    : id(id), isHospitalDischarged(isHospitalDischarged), time(time), priority(priority), numOfMedicalTreatment(numOfMedicalTreatment), numOfTests(numOfTests), numOfImagingTests(numOfImagingTests), numOfMedicines(numOfMedicines), timeOfService(timeOfService), timeOfWaiting(timeOfWaiting), timeTotal(0) {}
 
 string Paciente::getId()
 {
@@ -24,46 +24,6 @@ bool Paciente::getIsHospitalDischarged()
 void Paciente::setIsHospitalDischarged(int isHospitalDischarged)
 {
     this->isHospitalDischarged = isHospitalDischarged;
-}
-
-int Paciente::getYearOfService()
-{
-    return yearOfService;
-}
-
-void Paciente::setYearOfService(int yearOfService)
-{
-    this->yearOfService = yearOfService;
-}
-
-int Paciente::getMonthOfService()
-{
-    return monthOfService;
-}
-
-void Paciente::setMonthOfService(int monthOfService)
-{
-    this->monthOfService = monthOfService;
-}
-
-int Paciente::getDayOfService()
-{
-    return dayOfService;
-}
-
-void Paciente::setDayOfService(int dayOfService)
-{
-    this->dayOfService = dayOfService;
-}
-
-int Paciente::getHourOfService()
-{
-    return hourOfService;
-}
-
-void Paciente::setHourOfService(int hourOfService)
-{
-    this->hourOfService = hourOfService;
 }
 
 Priority Paciente::getPriority()
@@ -146,6 +106,16 @@ void Paciente::setTimeTotal(int timeTotal)
     this->timeTotal = timeTotal;
 }
 
+Time Paciente::getTime()
+{
+    return time;
+}
+
+void Paciente::setTime(Time time)
+{
+    this->time = time;
+}
+
 Paciente Paciente::LineToPaciente(string line)
 {
     string id;
@@ -161,5 +131,6 @@ Paciente Paciente::LineToPaciente(string line)
     int numOfMedicines;
     std::istringstream iss(line);
     iss >> id >> isHospitalDischarged >> yearOfService >> monthOfService >> dayOfService >> hourOfService >> priority >> numOfMedicalTreatment >> numOfTests >> numOfImagingTests >> numOfMedicines;
-    return Paciente(id, isHospitalDischarged, yearOfService, monthOfService, dayOfService, hourOfService, Priority(priority), numOfMedicalTreatment, numOfTests, numOfImagingTests, numOfMedicines, 0, 0);
+    Time time = Time(yearOfService, monthOfService, dayOfService, hourOfService);
+    return Paciente(id, isHospitalDischarged, time, Priority(priority), numOfMedicalTreatment, numOfTests, numOfImagingTests, numOfMedicines, 0, 0);
 }

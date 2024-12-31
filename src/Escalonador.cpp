@@ -45,11 +45,11 @@ void Escalonador::HeapifyPorBaixo(int posicao)
     int sucessorEsq = GetSucessorEsq(posicao);
     int sucessorDir = GetSucessorDir(posicao);
     int menor = posicao;
-    if (sucessorEsq < tam && data[posicao].compareTime(data[sucessorEsq]))
+    if (sucessorEsq < tam && data[posicao].getTime().compareTime(data[sucessorEsq].getTime()))
     {
         menor = sucessorEsq;
     }
-    if (sucessorDir < tam && data[menor].compareTime(data[sucessorDir]))
+    if (sucessorDir < tam && data[menor].getTime().compareTime(data[sucessorDir].getTime()))
     {
         menor = sucessorDir;
     }
@@ -65,7 +65,7 @@ void Escalonador::HeapifyPorBaixo(int posicao)
 void Escalonador::HeapifyPorCima(int posicao)
 {
     int ancestral = GetAncestral(posicao);
-    if (data[ancestral].compareTime(data[posicao]))
+    if (data[ancestral].getTime().compareTime(data[posicao].getTime()))
     {
         Evento temp = data[posicao];
         data[posicao] = data[ancestral];

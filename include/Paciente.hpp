@@ -1,6 +1,7 @@
 #ifndef PACIENTE_HPP
 #define PACIENTE_HPP
 #include <string>
+#include "Time.hpp"
 
 using namespace std;
 
@@ -16,10 +17,7 @@ class Paciente
 private:
     string id;
     int isHospitalDischarged;
-    int yearOfService;
-    int monthOfService;
-    int dayOfService;
-    int hourOfService;
+    Time time;
     Priority priority;
     int numOfMedicalTreatment;
     int numOfTests;
@@ -31,20 +29,12 @@ private:
 
 public:
     Paciente();
-    Paciente(string id, bool isHospitalDischarged, int yearOfService, int monthOfService, int dayOfService, int hourOfService, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, int timeOfService, int timeOfWaiting);
+    Paciente(string id, bool isHospitalDischarged, Time time, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, int timeOfService, int timeOfWaiting);
 
     string getId();
     void setId(string id);
     bool getIsHospitalDischarged();
     void setIsHospitalDischarged(int isHospitalDischarged);
-    int getYearOfService();
-    void setYearOfService(int yearOfService);
-    int getMonthOfService();
-    void setMonthOfService(int monthOfService);
-    int getDayOfService();
-    void setDayOfService(int dayOfService);
-    int getHourOfService();
-    void setHourOfService(int hourOfService);
     Priority getPriority();
     void setPriority(Priority priority);
     int getNumOfMedicalTreatment();
@@ -61,6 +51,8 @@ public:
     void setTimeOfWaiting(int timeOfWaiting);
     int getTimeTotal();
     void setTimeTotal(int timeTotal);
+    Time getTime();
+    void setTime(Time time);
 
     static Paciente LineToPaciente(string line);
 };
