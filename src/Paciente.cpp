@@ -1,32 +1,52 @@
 #include "Paciente.hpp"
 #include <sstream>
 
-Paciente::Paciente() : id(""), isHospitalDischarged(false), time(Time(0, 0, 0, 0)), priority(Priority::GREEN), numOfMedicalTreatment(0), numOfTests(0), numOfImagingTests(0), numOfMedicines(0), timeOfService(0), timeOfWaiting(0), timeTotal(0) {}
+Paciente::Paciente() : id(""), isHospitalDischarged(false), initialTime(0, 0, 0, 0.0), currentTime(0, 0, 0, 0.0), priority(Priority::LOW), numOfMedicalTreatment(0), numOfTests(0), numOfImagingTests(0), numOfMedicines(0), timeOfService(0), timeOfWaiting(0), timeTotal(0), state(State::NOT_ARRIVED) {}
 
-Paciente::Paciente(string id, bool isHospitalDischarged, Time time, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, int timeOfService, int timeOfWaiting)
-    : id(id), isHospitalDischarged(isHospitalDischarged), time(time), priority(priority), numOfMedicalTreatment(numOfMedicalTreatment), numOfTests(numOfTests), numOfImagingTests(numOfImagingTests), numOfMedicines(numOfMedicines), timeOfService(timeOfService), timeOfWaiting(timeOfWaiting), timeTotal(0) {}
+Paciente::Paciente(string id, bool isHospitalDischarged, Time initialTime, Time currentTime, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, double timeOfService, double timeOfWaiting)
+    : id(id), isHospitalDischarged(isHospitalDischarged), initialTime(initialTime), currentTime(currentTime), priority(priority), numOfMedicalTreatment(numOfMedicalTreatment), numOfTests(numOfTests), numOfImagingTests(numOfImagingTests), numOfMedicines(numOfMedicines), timeOfService(timeOfService), timeOfWaiting(timeOfWaiting), timeTotal(0), state(State::NOT_ARRIVED) {}
 
-string Paciente::getId()
+string Paciente::getId() const
 {
     return id;
 }
 
-void Paciente::setId(string id)
+void Paciente::setId(const string &id)
 {
     this->id = id;
 }
 
-bool Paciente::getIsHospitalDischarged()
+bool Paciente::getIsHospitalDischarged() const
 {
     return isHospitalDischarged;
 }
 
-void Paciente::setIsHospitalDischarged(int isHospitalDischarged)
+void Paciente::setIsHospitalDischarged(bool isHospitalDischarged)
 {
     this->isHospitalDischarged = isHospitalDischarged;
 }
 
-Priority Paciente::getPriority()
+Time Paciente::getInitialTime() const
+{
+    return initialTime;
+}
+
+void Paciente::setInitialTime(const Time &initialTime)
+{
+    this->initialTime = initialTime;
+}
+
+Time Paciente::getCurrentTime() const
+{
+    return currentTime;
+}
+
+void Paciente::setCurrentTime(const Time &currentTime)
+{
+    this->currentTime = currentTime;
+}
+
+Priority Paciente::getPriority() const
 {
     return priority;
 }
@@ -36,7 +56,7 @@ void Paciente::setPriority(Priority priority)
     this->priority = priority;
 }
 
-int Paciente::getNumOfMedicalTreatment()
+int Paciente::getNumOfMedicalTreatment() const
 {
     return numOfMedicalTreatment;
 }
@@ -46,7 +66,7 @@ void Paciente::setNumOfMedicalTreatment(int numOfMedicalTreatment)
     this->numOfMedicalTreatment = numOfMedicalTreatment;
 }
 
-int Paciente::getNumOfTests()
+int Paciente::getNumOfTests() const
 {
     return numOfTests;
 }
@@ -56,7 +76,7 @@ void Paciente::setNumOfTests(int numOfTests)
     this->numOfTests = numOfTests;
 }
 
-int Paciente::getNumOfImagingTests()
+int Paciente::getNumOfImagingTests() const
 {
     return numOfImagingTests;
 }
@@ -66,7 +86,7 @@ void Paciente::setNumOfImagingTests(int numOfImagingTests)
     this->numOfImagingTests = numOfImagingTests;
 }
 
-int Paciente::getNumOfMedicines()
+int Paciente::getNumOfMedicines() const
 {
     return numOfMedicines;
 }
@@ -76,44 +96,44 @@ void Paciente::setNumOfMedicines(int numOfMedicines)
     this->numOfMedicines = numOfMedicines;
 }
 
-int Paciente::getTimeOfService()
+double Paciente::getTimeOfService() const
 {
     return timeOfService;
 }
 
-void Paciente::setTimeOfService(int timeOfService)
+void Paciente::setTimeOfService(double timeOfService)
 {
     this->timeOfService = timeOfService;
 }
 
-int Paciente::getTimeOfWaiting()
+double Paciente::getTimeOfWaiting() const
 {
     return timeOfWaiting;
 }
 
-void Paciente::setTimeOfWaiting(int timeOfWaiting)
+void Paciente::setTimeOfWaiting(double timeOfWaiting)
 {
     this->timeOfWaiting = timeOfWaiting;
 }
 
-int Paciente::getTimeTotal()
+double Paciente::getTimeTotal() const
 {
     return timeTotal;
 }
 
-void Paciente::setTimeTotal(int timeTotal)
+void Paciente::setTimeTotal(double timeTotal)
 {
     this->timeTotal = timeTotal;
 }
 
-Time Paciente::getTime()
+State Paciente::getState() const
 {
-    return time;
+    return state;
 }
 
-void Paciente::setTime(Time time)
+void Paciente::setState(State state)
 {
-    this->time = time;
+    this->state = state;
 }
 
 Paciente Paciente::LineToPaciente(string line)
@@ -132,5 +152,5 @@ Paciente Paciente::LineToPaciente(string line)
     std::istringstream iss(line);
     iss >> id >> isHospitalDischarged >> yearOfService >> monthOfService >> dayOfService >> hourOfService >> priority >> numOfMedicalTreatment >> numOfTests >> numOfImagingTests >> numOfMedicines;
     Time time = Time(yearOfService, monthOfService, dayOfService, hourOfService);
-    return Paciente(id, isHospitalDischarged, time, Priority(priority), numOfMedicalTreatment, numOfTests, numOfImagingTests, numOfMedicines, 0, 0);
+    return Paciente(id, isHospitalDischarged, time, time, Priority(priority), numOfMedicalTreatment, numOfTests, numOfImagingTests, numOfMedicines, 0, 0);
 }

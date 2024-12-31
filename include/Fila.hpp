@@ -18,6 +18,11 @@ public:
     Paciente Remove();
     bool IsEmpty();
     void OrderByTime();
+    Node *MergeSort(Node *head);
+    Node *GetMiddle(Node *head);
+    Node *SortedMerge(Node *left, Node *right);
+    Node *GetHead();
+    Node *GetTail();
 };
 
 #endif

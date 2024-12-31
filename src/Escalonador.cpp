@@ -83,3 +83,31 @@ Escalonador::Escalonador(int maxsize)
 Escalonador::~Escalonador()
 {
 }
+
+Evento Escalonador::RemoveById(string id)
+{
+    for (int i = 0; i < tam; i++)
+    {
+        if (data[i].getPacienteId() == id)
+        {
+            Evento menorNumero = data[i];
+            data[i] = data[tam - 1];
+            tam--;
+            HeapifyPorBaixo(i);
+            return menorNumero;
+        }
+    }
+    return Evento();
+}
+
+Evento Escalonador::GetById(string id)
+{
+    for (int i = 0; i < tam; i++)
+    {
+        if (data[i].getPacienteId() == id)
+        {
+            return data[i];
+        }
+    }
+    return Evento();
+}

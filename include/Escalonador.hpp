@@ -11,6 +11,8 @@ private:
 public:
     Escalonador(int maxsize);
     ~Escalonador();
+    Evento RemoveById(string id);
+    Evento GetById(string id);
     void Insert(Evento event);
     Evento Remove();
     bool IsEmpty();

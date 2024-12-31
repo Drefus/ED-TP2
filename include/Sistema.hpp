@@ -3,6 +3,7 @@
 #include "Fila.hpp"
 #include "Escalonador.hpp"
 #include "Evento.hpp"
+#include "Procedimento.hpp"
 
 class Sistema
 {
@@ -14,27 +15,28 @@ public:
     Fila test;
     Fila imagingTest;
     Fila medicine;
+    Procedimento screeningProcedimento;
+    Procedimento medicalConsultationProcedimento;
+    Procedimento medicalTreatmentProcedimento;
+    Procedimento testProcedimento;
+    Procedimento imagingTestProcedimento;
+    Procedimento medicineProcedimento;
     Time initialTime;
     Time currentTime;
-    double screeningDutation;
-    double medicalConsultationDuration;
-    double medicalTreatmentDuration;
-    double testDuration;
-    double imagingTestDuration;
-    double medicineDuration;
-    int screeningCapacity;
-    int medicalConsultationCapacity;
-    int medicalTreatmentCapacity;
-    int testCapacity;
-    int imagingTestCapacity;
-    int medicineCapacity;
     int numPatients;
     Escalonador escalonador;
+    Paciente *pacientes;
     Sistema();
     ~Sistema();
     int FindTheNextFila(int filaId, Paciente paciente);
     void InstertInFila(Paciente paciente, int filaId);
     Paciente RemoveInFila(int filaId);
+    int GetPatientId(string id);
+    double GetDuration(int filaId, Paciente paciente);
+    void InicializeProcess();
+    int isEmpityProcess(int filaId);
+    void AddServiceToProcedimento(int filaId, Time initialTime, double duracao, int numUnit);
+    State GetNewState(int newFilaId, bool isDone);
 };
 
 #endif

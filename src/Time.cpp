@@ -40,22 +40,22 @@ bool Time::compareTime(Time time)
     return false;
 }
 
-int Time::getYear() const
+int Time::getYear()
 {
     return year;
 }
 
-int Time::getMonth() const
+int Time::getMonth()
 {
     return month;
 }
 
-int Time::getDay() const
+int Time::getDay()
 {
     return day;
 }
 
-double Time::getHour() const
+double Time::getHour()
 {
     return hour;
 }
@@ -78,4 +78,34 @@ void Time::setDay(int d)
 void Time::setHour(double h)
 {
     hour = h;
+}
+
+bool Time::isEqual(Time time)
+{
+    return year == time.getYear() && month == time.getMonth() && day == time.getDay() && hour == time.getHour();
+}
+
+void Time::addTime(double h)
+{
+    hour += h;
+    if (hour >= 24)
+    {
+        hour -= 24;
+        day++;
+        if (day > 30)
+        {
+            day = 1;
+            month++;
+            if (month > 12)
+            {
+                month = 1;
+                year++;
+            }
+        }
+    }
+}
+
+double Time::getTotalHours()
+{
+    return year * 8760 + month * 720 + day * 24 + hour;
 }

@@ -22,6 +22,9 @@ public:
     Time getTime();
     void setTime(Time time);
 
+    string getPacienteId();
+    void setPacienteId(string pacienteId);
+
     double getDuracao();
     void setDuracao(double duracao);
 };
