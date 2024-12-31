@@ -7,6 +7,7 @@ public:
     Paciente data;
     Node *next;
     Node(Paciente paciente);
+    ~Node();
+    Node();
 };
-Node;
 #endif

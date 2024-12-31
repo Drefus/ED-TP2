@@ -1,3 +1,5 @@
+#ifndef TIME_HPP
+#define TIME_HPP
 class Time
 {
 private:
@@ -8,6 +10,7 @@ private:
 
 public:
     Time(int y, int m, int d, double h);
+    Time();
     ~Time();
     bool compareTime(Time time);
     int getYear();
@@ -22,4 +25,4 @@ public:
     void addTime(double h);
     double getTotalHours();
 };
-;
+#endif

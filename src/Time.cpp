@@ -2,6 +2,10 @@
 
 Time::Time(int y, int m, int d, double h) : year(y), month(m), day(d), hour(h) {}
 
+Time::Time() : year(0), month(0), day(0), hour(0)
+{
+}
+
 Time::~Time()
 {
     year = 0;

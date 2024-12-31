@@ -16,6 +16,10 @@ Fila::~Fila()
     }
 }
 
+Fila::Fila() : head(nullptr), tail(nullptr), size(0)
+{
+}
+
 void Fila::Insert(Paciente paciente)
 {
 
@@ -135,8 +139,8 @@ Node *Fila::SortedMerge(Node *left, Node *right)
     }
 
     Node *result = nullptr;
-    if (left->data.getTime().compareTime(right->data.getTime()) ||
-        (left->data.getTime().isEqual(right->data.getTime()) && left->data.getPriority() >= right->data.getPriority()))
+    if (left->data.getCurrentTime().compareTime(right->data.getCurrentTime()) ||
+        (left->data.getCurrentTime().isEqual(right->data.getCurrentTime()) && left->data.getPriority() >= right->data.getPriority()))
     {
         result = left;
         result->next = SortedMerge(left->next, right);

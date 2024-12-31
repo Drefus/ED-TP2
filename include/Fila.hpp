@@ -12,6 +12,7 @@ private:
 
 public:
     Fila(int id);
+    Fila();
     ~Fila();
 
     void Insert(Paciente paciente);

@@ -80,6 +80,10 @@ Escalonador::Escalonador(int maxsize)
     this->tam = 0;
 }
 
+Escalonador::Escalonador() : tam(0), maxsize(0), data(nullptr)
+{
+}
+
 Escalonador::~Escalonador()
 {
 }

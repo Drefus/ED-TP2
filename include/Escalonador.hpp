@@ -10,6 +10,7 @@ private:
 
 public:
     Escalonador(int maxsize);
+    Escalonador();
     ~Escalonador();
     Evento RemoveById(string id);
     Evento GetById(string id);
