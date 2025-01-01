@@ -10,6 +10,10 @@ Paciente::Paciente() : id(""), isHospitalDischarged(false), initialTime(0, 0, 0,
 Paciente::Paciente(string id, bool isHospitalDischarged, Time initialTime, Time currentTime, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, double timeOfService, double timeOfWaiting)
     : id(id), isHospitalDischarged(isHospitalDischarged), initialTime(initialTime), currentTime(currentTime), priority(priority), numOfMedicalTreatment(numOfMedicalTreatment), numOfTests(numOfTests), numOfImagingTests(numOfImagingTests), numOfMedicines(numOfMedicines), timeOfService(timeOfService), timeOfWaiting(timeOfWaiting), timeTotal(0), state(State::NOT_ARRIVED) {}
 
+Paciente::~Paciente()
+{
+}
+
 string Paciente::getId()
 {
     return id;
@@ -167,6 +171,5 @@ Paciente Paciente::ReadLineToPaciente()
     cin >> numOfMedicines;
 
     Time time = Time(yearOfService, monthOfService, dayOfService, hourOfService);
-    cout << "id: " << id << " isHospitalDischarged: " << isHospitalDischarged << " yearOfService: " << yearOfService << " monthOfService: " << monthOfService << " dayOfService: " << dayOfService << " hourOfService: " << hourOfService << " priority: " << priority << " numOfMedicalTreatment: " << numOfMedicalTreatment << " numOfTests: " << numOfTests << " numOfImagingTests: " << numOfImagingTests << " numOfMedicines: " << numOfMedicines << endl;
     return Paciente(id, isHospitalDischarged == 1, time, time, Priority(priority), numOfMedicalTreatment, numOfTests, numOfImagingTests, numOfMedicines, 0, 0);
 }

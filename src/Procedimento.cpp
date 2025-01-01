@@ -6,7 +6,9 @@ Service::Service() : initialTime(), finalTime(), isOccupied(false), next(nullptr
 Service::Service(Time initialTime, Time finalTime, bool isOccupied)
     : initialTime(initialTime), finalTime(finalTime), isOccupied(isOccupied), next(nullptr) {}
 
-Service::~Service() {}
+Service::~Service()
+{
+}
 
 Time Service::getInitialTime()
 {
@@ -53,13 +55,12 @@ Unidade::Unidade() : services(nullptr), isOccupied(false) {}
 
 Unidade::~Unidade()
 {
-    // Clean up services
     Service *current = services;
     while (current != nullptr)
     {
-        Service *next = current->getNext();
-        delete current;
-        current = next;
+        Service *temp = current;
+        current = current->getNext();
+        delete temp;
     }
 }
 
@@ -88,7 +89,14 @@ Procedimento::Procedimento(int numMax, double duracao)
 
 Procedimento::~Procedimento()
 {
-    delete[] unidades;
+    if (unidades != nullptr)
+    {
+        for (int i = 0; i < numMax; ++i)
+        {
+            unidades[i].~Unidade();
+        }
+        delete[] unidades;
+    }
 }
 
 int Procedimento::emptyUnit()

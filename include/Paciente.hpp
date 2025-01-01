@@ -51,6 +51,7 @@ private:
 public:
     Paciente();
     Paciente(string id, bool isHospitalDischarged, Time initialTime, Time currentTime, Priority priority, int numOfMedicalTreatment, int numOfTests, int numOfImagingTests, int numOfMedicines, double timeOfService, double timeOfWaiting);
+    ~Paciente();
 
     string getId();
     void setId(string &id);

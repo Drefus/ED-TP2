@@ -86,6 +86,7 @@ Escalonador::Escalonador() : tam(0), maxsize(0), data(nullptr)
 
 Escalonador::~Escalonador()
 {
+    delete[] data;
 }
 
 Evento Escalonador::RemoveById(string id)

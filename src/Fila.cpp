@@ -1,9 +1,6 @@
 #include "Fila.hpp"
 
-Fila::Fila(int id) : head(nullptr), tail(nullptr), size(0)
-{
-    this->id = id;
-}
+Fila::Fila(int id) : head(nullptr), tail(nullptr), size(0), id(id) {}
 
 Fila::~Fila()
 {
@@ -16,13 +13,10 @@ Fila::~Fila()
     }
 }
 
-Fila::Fila() : head(nullptr), tail(nullptr), size(0)
-{
-}
+Fila::Fila() : head(nullptr), tail(nullptr), size(0), id(0) {}
 
 void Fila::Insert(Paciente paciente)
 {
-
     Node *newNode = new Node(paciente);
     if (IsEmpty())
     {
@@ -30,27 +24,8 @@ void Fila::Insert(Paciente paciente)
     }
     else
     {
-        Node *current = head;
-        Node *previous = nullptr;
-        while (current != nullptr && current->data.getPriority() >= paciente.getPriority())
-        {
-            previous = current;
-            current = current->next;
-        }
-        if (previous == nullptr)
-        {
-            newNode->next = head;
-            head = newNode;
-        }
-        else
-        {
-            newNode->next = current;
-            previous->next = newNode;
-            if (current == nullptr)
-            {
-                tail = newNode;
-            }
-        }
+        tail->next = newNode;
+        tail = newNode;
     }
     size++;
 }
@@ -59,11 +34,15 @@ Paciente Fila::Remove()
 {
     if (IsEmpty())
     {
-        throw "Fila vazia";
+        throw "Fila is empty";
     }
     Node *temp = head;
-    Paciente paciente = temp->data;
+    Paciente paciente = head->data;
     head = head->next;
+    if (head == nullptr)
+    {
+        tail = nullptr;
+    }
     delete temp;
     size--;
     return paciente;
@@ -71,34 +50,29 @@ Paciente Fila::Remove()
 
 bool Fila::IsEmpty()
 {
-    return size == 0;
+    return head == nullptr;
 }
 
-// Este método ordena a fila com base no horário de chegada dos pacientes.
-// Se dois pacientes tiverem o mesmo horário de chegada, ele os ordena com base na prioridade.
-// O paciente com o horário de chegada mais cedo ou maior prioridade vem primeiro.
 void Fila::OrderByTime()
 {
-    if (IsEmpty())
+    if (size > 1)
     {
-        return;
+        head = MergeSort(head);
+        Node *current = head;
+        while (current->next != nullptr)
+        {
+            current = current->next;
+        }
+        tail = current;
     }
-    head = MergeSort(head);
-    Node *current = head;
-    while (current->next != nullptr)
-    {
-        current = current->next;
-    }
-    tail = current;
 }
 
 Node *Fila::MergeSort(Node *head)
 {
-    if (!head || !head->next)
+    if (head == nullptr || head->next == nullptr)
     {
         return head;
     }
-
     Node *middle = GetMiddle(head);
     Node *nextOfMiddle = middle->next;
     middle->next = nullptr;
@@ -111,14 +85,12 @@ Node *Fila::MergeSort(Node *head)
 
 Node *Fila::GetMiddle(Node *head)
 {
-    if (!head)
+    if (head == nullptr)
     {
         return head;
     }
-
     Node *slow = head;
     Node *fast = head->next;
-
     while (fast != nullptr)
     {
         fast = fast->next;
@@ -133,18 +105,16 @@ Node *Fila::GetMiddle(Node *head)
 
 Node *Fila::SortedMerge(Node *left, Node *right)
 {
-    if (!left)
+    if (left == nullptr)
     {
         return right;
     }
-    if (!right)
+    if (right == nullptr)
     {
         return left;
     }
-
     Node *result = nullptr;
-    if (left->data.getCurrentTime().compareTime(right->data.getCurrentTime()) == true ||
-        (left->data.getCurrentTime().isEqual(right->data.getCurrentTime()) == true && left->data.getPriority() >= right->data.getPriority()))
+    if (left->data.getCurrentTime().compareTime(right->data.getCurrentTime()))
     {
         result = left;
         result->next = SortedMerge(left->next, right);

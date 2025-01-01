@@ -3,232 +3,268 @@
 #include "Paciente.hpp"
 #include <iostream>
 using namespace std;
+
+void Sistema::InicializeProcess()
+{
+    double screeningDutation;
+    int screeningCapacity;
+    double medicalConsultationDuration;
+    int medicalConsultationCapacity;
+    double medicalTreatmentDuration;
+    int medicalTreatmentCapacity;
+    double testDuration;
+    int testCapacity;
+    double imagingTestDuration;
+    int imagingTestCapacity;
+    double medicineDuration;
+    int medicineCapacity;
+    cin >> screeningDutation;
+    cin >> screeningCapacity;
+    cin >> medicalConsultationDuration;
+    cin >> medicalConsultationCapacity;
+    cin >> medicalTreatmentDuration;
+    cin >> medicalTreatmentCapacity;
+    cin >> testDuration;
+    cin >> testCapacity;
+    cin >> imagingTestDuration;
+    cin >> imagingTestCapacity;
+    cin >> medicineDuration;
+    cin >> medicineCapacity;
+
+    screeningProcedimento = Procedimento(screeningCapacity, screeningDutation);
+    // medicalConsultationProcedimento = Procedimento(medicalConsultationCapacity, medicalConsultationDuration);
+    // medicalTreatmentProcedimento = Procedimento(medicalTreatmentCapacity, medicalTreatmentDuration);
+    // testProcedimento = Procedimento(testCapacity, testDuration);
+    // imagingTestProcedimento = Procedimento(imagingTestCapacity, imagingTestDuration);
+    // medicineProcedimento = Procedimento(medicineCapacity, medicineDuration);
+}
+
 Sistema::Sistema()
 {
     InicializeProcess();
-    cin >> numPatients;
-    initialTime = Time(0, 0, 0, 0);
-    currentTime = Time(0, 0, 0, 0);
-    escalonador = Escalonador(numPatients);
-    preScreening = Fila(0);
-    pacientes = new Paciente[numPatients];
-    for (int i = 0; i < numPatients; i++)
-    {
-        Paciente paciente;
-        string line;
-        paciente = paciente.ReadLineToPaciente();
-        pacientes[i] = paciente;
-        Evento evento;
-        evento = Evento(0, paciente.getId(), paciente.getCurrentTime(), screeningProcedimento.getDuration());
-        escalonador.Insert(evento);
-    }
-    preScreening.OrderByTime();
-    screening = Fila(1);
-    medicalConsultation = Fila(2);
-    medicalTreatment = Fila(3);
-    test = Fila(4);
-    imagingTest = Fila(5);
-    medicine = Fila(6);
+    // std::cin >> numPatients;
+    // initialTime = Time(0, 0, 0, 0);
+    // currentTime = Time(0, 0, 0, 0);
+    // escalonador = Escalonador(numPatients);
+    // preScreening = Fila(0);
+    // pacientes = new Paciente[numPatients];
+    // for (int i = 0; i < numPatients; i++)
+    // {
+    //     Paciente paciente;
+    //     string line;
+    //     paciente = paciente.ReadLineToPaciente();
+    //     pacientes[i] = paciente;
+    //     Evento evento;
+    //     evento = Evento(0, paciente.getId(), paciente.getCurrentTime(), screeningProcedimento.getDuration());
+    //     escalonador.Insert(evento);
+    // }
+    // preScreening.OrderByTime();
+    // screening = Fila(1);
+    // medicalConsultation = Fila(2);
+    // medicalTreatment = Fila(3);
+    // test = Fila(4);
+    // imagingTest = Fila(5);
+    // medicine = Fila(6);
 
-    while (!escalonador.IsEmpty() || !preScreening.IsEmpty() || !screening.IsEmpty() || !medicalConsultation.IsEmpty() || !medicalTreatment.IsEmpty() || !test.IsEmpty() || !imagingTest.IsEmpty() || !medicine.IsEmpty())
-    {
-        Evento evento = escalonador.Remove();
-        currentTime = evento.getTime();
-        int filaId = evento.getFilaId();
-        int pacienteId = GetPatientId(evento.getPacienteId());
-        Paciente paciente = pacientes[pacienteId];
-        if (paciente.getState() != State::HOSPITAL_DISCHARGED)
-        {
-            int nextFila = FindTheNextFila(filaId, paciente);
-            int numUnit = isEmpityProcess(nextFila);
-            if (numUnit != -1)
-            {
-                double duration = GetDuration(nextFila, paciente);
-                AddServiceToProcedimento(nextFila, currentTime, duration, numUnit);
-                Time newTime = currentTime;
-                newTime.addTime(duration);
-                evento = Evento(nextFila, paciente.getId(), newTime, duration);
-                Paciente newPaciente = paciente;
-                newPaciente.setCurrentTime(newTime);
-                newPaciente.setState(GetNewState(nextFila, true));
-                pacientes[pacienteId] = newPaciente;
-                RemoveInFila(filaId);
-                InstertInFila(newPaciente, nextFila);
-            }
-            else
-            {
-                Paciente newPaciente = paciente;
+    // while (!escalonador.IsEmpty() || !preScreening.IsEmpty() || !screening.IsEmpty() || !medicalConsultation.IsEmpty() || !medicalTreatment.IsEmpty() || !test.IsEmpty() || !imagingTest.IsEmpty() || !medicine.IsEmpty())
+    // {
+    //     Evento evento = escalonador.Remove();
+    //     currentTime = evento.getTime();
+    //     int filaId = evento.getFilaId();
+    //     int pacienteId = GetPatientId(evento.getPacienteId());
+    //     Paciente paciente = pacientes[pacienteId];
+    //     if (paciente.getState() != State::HOSPITAL_DISCHARGED)
+    //     {
+    //         int nextFila = FindTheNextFila(filaId, paciente);
+    //         int numUnit = isEmpityProcess(nextFila);
+    //         if (numUnit != -1)
+    //         {
+    //             double duration = GetDuration(nextFila, paciente);
+    //             AddServiceToProcedimento(nextFila, currentTime, duration, numUnit);
+    //             Time newTime = currentTime;
+    //             newTime.addTime(duration);
+    //             evento = Evento(nextFila, paciente.getId(), newTime, duration);
+    //             Paciente newPaciente = paciente;
+    //             newPaciente.setCurrentTime(newTime);
+    //             newPaciente.setState(GetNewState(nextFila, true));
+    //             pacientes[pacienteId] = newPaciente;
+    //             RemoveInFila(filaId);
+    //             InstertInFila(newPaciente, nextFila);
+    //         }
+    //         else
+    //         {
+    //             Paciente newPaciente = paciente;
 
-                pacientes[pacienteId] = newPaciente;
-            }
-            escalonador.Insert(evento);
-        }
-        if (!preScreening.IsEmpty())
-        {
-            bool loop = true;
-            while (loop)
-            {
-                Paciente paciente = preScreening.GetHead()->data;
-                Evento currentEvent = escalonador.GetById(paciente.getId());
-                Time eventTime = currentEvent.getTime();
-                eventTime.addTime(currentEvent.getDuracao());
-                if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
-                {
-                    screening.Remove();
-                    paciente.setState(State::IN_SCREENING);
-                    paciente.setCurrentTime(eventTime);
-                    escalonador.RemoveById(paciente.getId());
-                    escalonador.Insert(Evento(2, paciente.getId(), eventTime, medicalConsultationProcedimento.getDuration()));
-                    medicalConsultation.Insert(paciente);
-                }
-                else
-                {
-                    loop = false;
-                }
-            };
-        }
-        if (!screening.IsEmpty())
-        {
-            bool loop = true;
-            while (loop)
-            {
-                Paciente paciente = screening.GetHead()->data;
-                Evento currentEvent = escalonador.GetById(paciente.getId());
-                Time eventTime = currentEvent.getTime();
-                eventTime.addTime(currentEvent.getDuracao());
-                if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
-                {
-                    medicalConsultation.Remove();
-                    paciente.setState(State::IN_MEDICAL_CONSULTATION);
-                    paciente.setCurrentTime(eventTime);
-                    escalonador.RemoveById(paciente.getId());
-                    escalonador.Insert(Evento(3, paciente.getId(), eventTime, medicalTreatmentProcedimento.getDuration()));
-                    medicalTreatment.Insert(paciente);
-                }
-                else
-                {
-                    loop = false;
-                }
-            };
-        }
-        if (!medicalConsultation.IsEmpty())
-        {
-            bool loop = true;
-            while (loop)
-            {
-                Paciente paciente = medicalConsultation.GetHead()->data;
-                Evento currentEvent = escalonador.GetById(paciente.getId());
-                Time eventTime = currentEvent.getTime();
-                eventTime.addTime(currentEvent.getDuracao());
-                if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
-                {
-                    medicalTreatment.Remove();
-                    paciente.setState(State::IN_MEDICAL_TREATMENT);
-                    paciente.setCurrentTime(eventTime);
-                    escalonador.RemoveById(paciente.getId());
-                    escalonador.Insert(Evento(4, paciente.getId(), eventTime, testProcedimento.getDuration()));
-                    test.Insert(paciente);
-                }
-                else
-                {
-                    loop = false;
-                }
-            };
-        }
-        if (!medicalTreatment.IsEmpty())
-        {
-            bool loop = true;
-            while (loop)
-            {
-                Paciente paciente = medicalTreatment.GetHead()->data;
-                Evento currentEvent = escalonador.GetById(paciente.getId());
-                Time eventTime = currentEvent.getTime();
-                eventTime.addTime(currentEvent.getDuracao());
-                if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
-                {
-                    test.Remove();
-                    paciente.setState(State::IN_TEST);
-                    paciente.setCurrentTime(eventTime);
-                    escalonador.RemoveById(paciente.getId());
-                    escalonador.Insert(Evento(5, paciente.getId(), eventTime, imagingTestProcedimento.getDuration()));
-                    imagingTest.Insert(paciente);
-                }
-                else
-                {
-                    loop = false;
-                }
-            };
-        }
-        if (!test.IsEmpty())
-        {
-            bool loop = true;
-            while (loop)
-            {
-                Paciente paciente = test.GetHead()->data;
-                Evento currentEvent = escalonador.GetById(paciente.getId());
-                Time eventTime = currentEvent.getTime();
-                eventTime.addTime(currentEvent.getDuracao());
-                if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
-                {
-                    imagingTest.Remove();
-                    paciente.setState(State::IN_IMAGING_TEST);
-                    paciente.setCurrentTime(eventTime);
-                    escalonador.RemoveById(paciente.getId());
-                    escalonador.Insert(Evento(6, paciente.getId(), eventTime, medicineProcedimento.getDuration()));
-                    medicine.Insert(paciente);
-                }
-                else
-                {
-                    loop = false;
-                }
-            };
-        }
-        if (!imagingTest.IsEmpty())
-        {
-            bool loop = true;
-            while (loop)
-            {
-                Paciente paciente = imagingTest.GetHead()->data;
-                Evento currentEvent = escalonador.GetById(paciente.getId());
-                Time eventTime = currentEvent.getTime();
-                eventTime.addTime(currentEvent.getDuracao());
-                if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
-                {
-                    medicine.Remove();
-                    paciente.setState(State::IN_MEDICINE);
-                    paciente.setCurrentTime(eventTime);
-                    escalonador.RemoveById(paciente.getId());
-                }
-                else
-                {
-                    loop = false;
-                }
-            };
-        }
-        if (!medicine.IsEmpty())
-        {
-            bool loop = true;
-            while (loop)
-            {
-                Paciente paciente = medicine.GetHead()->data;
-                Evento currentEvent = escalonador.GetById(paciente.getId());
-                Time eventTime = currentEvent.getTime();
-                eventTime.addTime(currentEvent.getDuracao());
-                if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
-                {
-                    medicine.Remove();
-                    paciente.setState(State::HOSPITAL_DISCHARGED);
-                    paciente.setCurrentTime(eventTime);
-                    escalonador.RemoveById(paciente.getId());
-                }
-                else
-                {
-                    loop = false;
-                }
-            };
-        }
-    }
-    PrintPacientes();
+    //             pacientes[pacienteId] = newPaciente;
+    //         }
+    //         escalonador.Insert(evento);
+    //     }
+    //     if (!preScreening.IsEmpty())
+    //     {
+    //         bool loop = true;
+    //         while (loop)
+    //         {
+    //             Paciente paciente = preScreening.GetHead()->data;
+    //             Evento currentEvent = escalonador.GetById(paciente.getId());
+    //             Time eventTime = currentEvent.getTime();
+    //             eventTime.addTime(currentEvent.getDuracao());
+    //             if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
+    //             {
+    //                 screening.Remove();
+    //                 paciente.setState(State::IN_SCREENING);
+    //                 paciente.setCurrentTime(eventTime);
+    //                 escalonador.RemoveById(paciente.getId());
+    //                 escalonador.Insert(Evento(2, paciente.getId(), eventTime, medicalConsultationProcedimento.getDuration()));
+    //                 medicalConsultation.Insert(paciente);
+    //             }
+    //             else
+    //             {
+    //                 loop = false;
+    //             }
+    //         };
+    //     }
+    //     if (!screening.IsEmpty())
+    //     {
+    //         bool loop = true;
+    //         while (loop)
+    //         {
+    //             Paciente paciente = screening.GetHead()->data;
+    //             Evento currentEvent = escalonador.GetById(paciente.getId());
+    //             Time eventTime = currentEvent.getTime();
+    //             eventTime.addTime(currentEvent.getDuracao());
+    //             if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
+    //             {
+    //                 medicalConsultation.Remove();
+    //                 paciente.setState(State::IN_MEDICAL_CONSULTATION);
+    //                 paciente.setCurrentTime(eventTime);
+    //                 escalonador.RemoveById(paciente.getId());
+    //                 escalonador.Insert(Evento(3, paciente.getId(), eventTime, medicalTreatmentProcedimento.getDuration()));
+    //                 medicalTreatment.Insert(paciente);
+    //             }
+    //             else
+    //             {
+    //                 loop = false;
+    //             }
+    //         };
+    //     }
+    //     if (!medicalConsultation.IsEmpty())
+    //     {
+    //         bool loop = true;
+    //         while (loop)
+    //         {
+    //             Paciente paciente = medicalConsultation.GetHead()->data;
+    //             Evento currentEvent = escalonador.GetById(paciente.getId());
+    //             Time eventTime = currentEvent.getTime();
+    //             eventTime.addTime(currentEvent.getDuracao());
+    //             if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
+    //             {
+    //                 medicalTreatment.Remove();
+    //                 paciente.setState(State::IN_MEDICAL_TREATMENT);
+    //                 paciente.setCurrentTime(eventTime);
+    //                 escalonador.RemoveById(paciente.getId());
+    //                 escalonador.Insert(Evento(4, paciente.getId(), eventTime, testProcedimento.getDuration()));
+    //                 test.Insert(paciente);
+    //             }
+    //             else
+    //             {
+    //                 loop = false;
+    //             }
+    //         };
+    //     }
+    //     if (!medicalTreatment.IsEmpty())
+    //     {
+    //         bool loop = true;
+    //         while (loop)
+    //         {
+    //             Paciente paciente = medicalTreatment.GetHead()->data;
+    //             Evento currentEvent = escalonador.GetById(paciente.getId());
+    //             Time eventTime = currentEvent.getTime();
+    //             eventTime.addTime(currentEvent.getDuracao());
+    //             if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
+    //             {
+    //                 test.Remove();
+    //                 paciente.setState(State::IN_TEST);
+    //                 paciente.setCurrentTime(eventTime);
+    //                 escalonador.RemoveById(paciente.getId());
+    //                 escalonador.Insert(Evento(5, paciente.getId(), eventTime, imagingTestProcedimento.getDuration()));
+    //                 imagingTest.Insert(paciente);
+    //             }
+    //             else
+    //             {
+    //                 loop = false;
+    //             }
+    //         };
+    //     }
+    //     if (!test.IsEmpty())
+    //     {
+    //         bool loop = true;
+    //         while (loop)
+    //         {
+    //             Paciente paciente = test.GetHead()->data;
+    //             Evento currentEvent = escalonador.GetById(paciente.getId());
+    //             Time eventTime = currentEvent.getTime();
+    //             eventTime.addTime(currentEvent.getDuracao());
+    //             if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
+    //             {
+    //                 imagingTest.Remove();
+    //                 paciente.setState(State::IN_IMAGING_TEST);
+    //                 paciente.setCurrentTime(eventTime);
+    //                 escalonador.RemoveById(paciente.getId());
+    //                 escalonador.Insert(Evento(6, paciente.getId(), eventTime, medicineProcedimento.getDuration()));
+    //                 medicine.Insert(paciente);
+    //             }
+    //             else
+    //             {
+    //                 loop = false;
+    //             }
+    //         };
+    //     }
+    //     if (!imagingTest.IsEmpty())
+    //     {
+    //         bool loop = true;
+    //         while (loop)
+    //         {
+    //             Paciente paciente = imagingTest.GetHead()->data;
+    //             Evento currentEvent = escalonador.GetById(paciente.getId());
+    //             Time eventTime = currentEvent.getTime();
+    //             eventTime.addTime(currentEvent.getDuracao());
+    //             if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
+    //             {
+    //                 medicine.Remove();
+    //                 paciente.setState(State::IN_MEDICINE);
+    //                 paciente.setCurrentTime(eventTime);
+    //                 escalonador.RemoveById(paciente.getId());
+    //             }
+    //             else
+    //             {
+    //                 loop = false;
+    //             }
+    //         };
+    //     }
+    //     if (!medicine.IsEmpty())
+    //     {
+    //         bool loop = true;
+    //         while (loop)
+    //         {
+    //             Paciente paciente = medicine.GetHead()->data;
+    //             Evento currentEvent = escalonador.GetById(paciente.getId());
+    //             Time eventTime = currentEvent.getTime();
+    //             eventTime.addTime(currentEvent.getDuracao());
+    //             if (currentTime.compareTime(eventTime) || currentTime.isEqual(eventTime))
+    //             {
+    //                 medicine.Remove();
+    //                 paciente.setState(State::HOSPITAL_DISCHARGED);
+    //                 paciente.setCurrentTime(eventTime);
+    //                 escalonador.RemoveById(paciente.getId());
+    //             }
+    //             else
+    //             {
+    //                 loop = false;
+    //             }
+    //         };
+    //     }
+    // }
+    // PrintPacientes();
 }
 
 Sistema::~Sistema()
@@ -350,41 +386,6 @@ double Sistema::GetDuration(int filaId, Paciente paciente)
         break;
     }
     return 0;
-}
-
-void Sistema::InicializeProcess()
-{
-    double screeningDutation;
-    int screeningCapacity;
-    double medicalConsultationDuration;
-    int medicalConsultationCapacity;
-    double medicalTreatmentDuration;
-    int medicalTreatmentCapacity;
-    double testDuration;
-    int testCapacity;
-    double imagingTestDuration;
-    int imagingTestCapacity;
-    double medicineDuration;
-    int medicineCapacity;
-    cin >> screeningDutation;
-    cin >> screeningCapacity;
-    cin >> medicalConsultationDuration;
-    cin >> medicalConsultationCapacity;
-    cin >> medicalTreatmentDuration;
-    cin >> medicalTreatmentCapacity;
-    cin >> testDuration;
-    cin >> testCapacity;
-    cin >> imagingTestDuration;
-    cin >> imagingTestCapacity;
-    cin >> medicineDuration;
-    cin >> medicineCapacity;
-
-    screeningProcedimento = Procedimento(screeningCapacity, screeningDutation);
-    medicalConsultationProcedimento = Procedimento(medicalConsultationCapacity, medicalConsultationDuration);
-    medicalTreatmentProcedimento = Procedimento(medicalTreatmentCapacity, medicalTreatmentDuration);
-    testProcedimento = Procedimento(testCapacity, testDuration);
-    imagingTestProcedimento = Procedimento(imagingTestCapacity, imagingTestDuration);
-    medicineProcedimento = Procedimento(medicineCapacity, medicineDuration);
 }
 
 int Sistema::isEmpityProcess(int filaId)

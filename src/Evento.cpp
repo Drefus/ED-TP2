@@ -5,7 +5,9 @@ Evento::Evento() : filaId(0), time(0, 0, 0, 0), duracao(0.0) {}
 Evento::Evento(int filaId, string pacienteId, Time time, double duracao)
     : filaId(filaId), pacienteId(pacienteId), time(time), duracao(duracao) {}
 
-Evento::~Evento() {}
+Evento::~Evento()
+{
+}
 
 int Evento::getFilaId()
 {
